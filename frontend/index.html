@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Debugger</title>
+  <link rel="stylesheet" href="/frontend/style.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo">api<span>.</span>debugger</div>
+  <div class="tagline">paste a failed request, get a plain-English diagnosis</div>
+</header>
+
+<div class="container">
+
+  <!-- left panel: input form -->
+  <div class="panel">
+    <div class="panel-header">Request Details</div>
+    <div class="panel-body">
+
+      <div class="examples-strip">
+        <div class="examples-label">Try an example</div>
+        <div id="exampleButtons"></div>
+      </div>
+
+      <form id="debugForm" autocomplete="off">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="endpoint">Endpoint</label>
+            <input
+              type="text"
+              id="endpoint"
+              name="endpoint"
+              placeholder="/api/v1/users"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="method">Method</label>
+            <select id="method" name="method">
+              <option value="GET">GET</option>
+              <option value="POST" selected>POST</option>
+              <option value="PUT">PUT</option>
+              <option value="PATCH">PATCH</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="headers">Headers <span style="color:var(--text-dim)">(JSON)</span></label>
+          <textarea
+            id="headers"
+            name="headers"
+            placeholder='{"Authorization": "Bearer your_token"}'
+            rows="3"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="payload">Payload <span style="color:var(--text-dim)">(JSON, optional)</span></label>
+          <textarea
+            id="payload"
+            name="payload"
+            placeholder='{"name": "John"}'
+            rows="3"
+          ></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="status_code">Status Code</label>
+            <input
+              type="number"
+              id="status_code"
+              name="status_code"
+              placeholder="401"
+              min="100"
+              max="599"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="error_message">Error Message</label>
+            <input
+              type="text"
+              id="error_message"
+              name="error_message"
+              placeholder="Unauthorized"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="logs">Logs <span style="color:var(--text-dim)">(optional — paste relevant lines)</span></label>
+          <textarea
+            id="logs"
+            name="logs"
+            placeholder="JWT expired at 10:45&#10;upstream timed out..."
+            rows="4"
+          ></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn">Debug Request</button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- right panel: result output -->
+  <div class="panel">
+    <div class="panel-header">Diagnosis</div>
+    <div class="panel-body">
+      <div id="result">
+        <div class="empty-state">
+          <div class="icon">⚡</div>
+          <p>Fill in the form and hit<br/>"Debug Request"</p>
+        </div>
+      </div>
+
+      <div class="history-actions">
+        <button type="button" id="toggleHistoryBtn">Show History</button>
+        <button type="button" id="exportHistoryBtn" disabled>Export</button>
+      </div>
+      <div id="historyContainer">
+        <div id="historyBox" class="history-box"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="/frontend/script.js"></script>
+</body>
+</html>
